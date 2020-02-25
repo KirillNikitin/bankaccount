@@ -1,0 +1,18 @@
+<h2>New Payee</h2>
+<form action="/payees" method="POST">
+    <div class="form-group">
+        
+        <%- include('_form_fields') %>
+    </div>
+    <!--<div class="form-group">
+        <label for="bankName" ng-bind="bankAddEdit" class="ng-binding">Name of bank</label>
+        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="bankName" placeholder="Enter name of bank" ng-model="newNameOfBank">
+    </div>
+    <div class="form-group">
+        <label for="cardNumber" ng-bind="ibanAddEdit" class="ng-binding">IBAN</label>
+        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" ng-model="newIBAN">
+    </div>-->
+
+    <a href="/payees">Cancel</a>
+    <button type="submit">Create</button>
+</form>
