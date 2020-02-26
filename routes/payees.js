@@ -3,8 +3,20 @@ const router = express.Router()
 const Payee = require('../models/payee')
 
 //All Payees Route
-router.get('/', (req, res) => {
-    res.render('payees/index');
+router.get('/', async (req, res) => {
+    let searchOptions = {}
+    if (req.query.name != null && req.query.name !== '') {
+        searchOptions.name = new RegExp(req.query.name, 'i')
+    }
+    try {
+        const payees = await Payee.find(searchOptions)
+        res.render('payees/index', { 
+            payees: payees,
+            searchOptions: req.query
+        });
+    } catch {
+        res.redirect('/')
+    }    
 })
 
 //New Payee Route
@@ -13,25 +25,33 @@ router.get('/new', (req, res) => {
 })
 
 //Create Payee Route
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const payee = new Payee({
         name: req.body.name
     })
-    payee.save((err, newPayee) => {
+    try {
+        const newPayee = await payee.save()
+        //res.redirect(`payees/${newPayee.id}`)
+        res.redirect(`payees`)
+    } catch {
+        res.render('payees/new', {
+            payee: payee,
+            errorMessage: 'Error creating Payee'
+        })
+    }
+    /*payee.save((err, newPayee) => {
         if(err) {
-            console.log('1')
             res.render('payees/new', {
                 payee: payee,
                 errorMessage: 'Error creating Payee'
             })
             
         } else {
-            console.log('0')
             //res.redirect(`payees/${newPayee.id}`)
             res.redirect(`payees`)
             
         }
-    })
+    })*/
     //res.send(req.body.name)
 })
 

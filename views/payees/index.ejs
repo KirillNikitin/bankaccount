@@ -1,1 +1,9 @@
-All Payees
+<h2>Search Payees</h2>
+<form action="/payees" method="GET">
+    <label>Name</label>
+    <input type="text" name="name" value="<%= searchOptions.name %>">
+    <button type="submit">Search</button>
+</form>
+<% payees.forEach(payee => { %>
+    <div><%= payee.name %></div>
+<% }) %>
